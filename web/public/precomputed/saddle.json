@@ -1,0 +1,188 @@
+{
+ "schema": 1,
+ "name": "saddle",
+ "dim": 2,
+ "lorentzian": false,
+ "coords": [
+  {
+   "name": "u",
+   "latex": "u"
+  },
+  {
+   "name": "v",
+   "latex": "v"
+  }
+ ],
+ "params": [
+  {
+   "name": "k",
+   "latex": "k",
+   "default": 1.0
+  }
+ ],
+ "metric": {
+  "latex": "\\left[\\begin{matrix}k^{2} u^{2} + 1 & - k^{2} u v\\\\- k^{2} u v & k^{2} v^{2} + 1\\end{matrix}\\right]",
+  "components": [
+   [
+    "k^{2} u^{2} + 1",
+    "- k^{2} u v"
+   ],
+   [
+    "- k^{2} u v",
+    "k^{2} v^{2} + 1"
+   ]
+  ]
+ },
+ "inverse": {
+  "latex": "\\left[\\begin{matrix}\\frac{k^{2} v^{2} + 1}{k^{2} u^{2} + k^{2} v^{2} + 1} & \\frac{k^{2} u v}{k^{2} u^{2} + k^{2} v^{2} + 1}\\\\\\frac{k^{2} u v}{k^{2} u^{2} + k^{2} v^{2} + 1} & \\frac{k^{2} u^{2} + 1}{k^{2} u^{2} + k^{2} v^{2} + 1}\\end{matrix}\\right]",
+  "components": [
+   [
+    "\\frac{k^{2} v^{2} + 1}{k^{2} u^{2} + k^{2} v^{2} + 1}",
+    "\\frac{k^{2} u v}{k^{2} u^{2} + k^{2} v^{2} + 1}"
+   ],
+   [
+    "\\frac{k^{2} u v}{k^{2} u^{2} + k^{2} v^{2} + 1}",
+    "\\frac{k^{2} u^{2} + 1}{k^{2} u^{2} + k^{2} v^{2} + 1}"
+   ]
+  ]
+ },
+ "det": "k^{2} u^{2} + k^{2} v^{2} + 1",
+ "sqrtAbsDet": "\\sqrt{k^{2} u^{2} + k^{2} v^{2} + 1}",
+ "kroneckerOk": true,
+ "lineElement": "ds^{2} = \\left(k^{2} u^{2} + 1\\right)\\,du^{2} -  2 k^{2} u v\\,du\\,dv + \\left(k^{2} v^{2} + 1\\right)\\,dv^{2}",
+ "christoffel": [
+  {
+   "upper": 0,
+   "lower": [
+    0,
+    0
+   ],
+   "latex": "\\Gamma^{u}_{u u} = \\frac{k^{2} u}{k^{2} u^{2} + k^{2} v^{2} + 1}"
+  },
+  {
+   "upper": 0,
+   "lower": [
+    1,
+    1
+   ],
+   "latex": "\\Gamma^{u}_{v v} = - \\frac{k^{2} u}{k^{2} u^{2} + k^{2} v^{2} + 1}"
+  },
+  {
+   "upper": 1,
+   "lower": [
+    0,
+    0
+   ],
+   "latex": "\\Gamma^{v}_{u u} = - \\frac{k^{2} v}{k^{2} u^{2} + k^{2} v^{2} + 1}"
+  },
+  {
+   "upper": 1,
+   "lower": [
+    1,
+    1
+   ],
+   "latex": "\\Gamma^{v}_{v v} = \\frac{k^{2} v}{k^{2} u^{2} + k^{2} v^{2} + 1}"
+  }
+ ],
+ "riemann": {
+  "independentCount": 1,
+  "nonzero": [
+   {
+    "indices": [
+     0,
+     1,
+     0,
+     1
+    ],
+    "latex": "R_{u v u v} = - \\frac{k^{2}}{k^{2} u^{2} + k^{2} v^{2} + 1}"
+   }
+  ]
+ },
+ "ricci": [
+  {
+   "indices": [
+    0,
+    0
+   ],
+   "latex": "R_{u u} = - \\frac{k^{2} \\left(k^{2} u^{2} + 1\\right)}{\\left(k^{2} u^{2} + k^{2} v^{2} + 1\\right)^{2}}"
+  },
+  {
+   "indices": [
+    0,
+    1
+   ],
+   "latex": "R_{u v} = \\frac{k^{4} u v}{\\left(k^{2} u^{2} + k^{2} v^{2} + 1\\right)^{2}}"
+  },
+  {
+   "indices": [
+    1,
+    1
+   ],
+   "latex": "R_{v v} = - \\frac{k^{2} \\left(k^{2} v^{2} + 1\\right)}{\\left(k^{2} u^{2} + k^{2} v^{2} + 1\\right)^{2}}"
+  }
+ ],
+ "ricciFlat": false,
+ "scalar": "- \\frac{2 k^{2}}{\\left(k^{2} u^{2} + k^{2} v^{2} + 1\\right)^{2}}",
+ "einstein": [],
+ "leviCivita": {
+  "latex": "\\varepsilon_{u v} = \\sqrt{|g|} = \\sqrt{k^{2} u^{2} + k^{2} v^{2} + 1}",
+  "lower": [
+   {
+    "indices": [
+     0,
+     1
+    ],
+    "value": "\\sqrt{k^{2} u^{2} + k^{2} v^{2} + 1}"
+   },
+   {
+    "indices": [
+     1,
+     0
+    ],
+    "value": "- \\sqrt{k^{2} u^{2} + k^{2} v^{2} + 1}"
+   }
+  ],
+  "upper": [
+   {
+    "indices": [
+     0,
+     1
+    ],
+    "value": "\\frac{1}{\\sqrt{k^{2} u^{2} + k^{2} v^{2} + 1}}"
+   },
+   {
+    "indices": [
+     1,
+     0
+    ],
+    "value": "- \\frac{1}{\\sqrt{k^{2} u^{2} + k^{2} v^{2} + 1}}"
+   }
+  ]
+ },
+ "geodesics": [
+  "\\ddot{u} = - \\frac{k^{2} u \\left(\\dot{u} - \\dot{v}\\right) \\left(\\dot{u} + \\dot{v}\\right)}{k^{2} u^{2} + k^{2} v^{2} + 1}",
+  "\\ddot{v} = \\frac{k^{2} v \\left(\\dot{u} - \\dot{v}\\right) \\left(\\dot{u} + \\dot{v}\\right)}{k^{2} u^{2} + k^{2} v^{2} + 1}"
+ ],
+ "js": {
+  "metric": "const x0 = x[0];\nconst x1 = x[1];\nconst p_k = p[\"k\"];\nconst t_0 = Math.pow(p_k, 2);\nconst t_1 = -t_0*x0*x1;\nreturn [t_0*Math.pow(x0, 2) + 1, t_1, t_1, t_0*Math.pow(x1, 2) + 1];",
+  "inverse": "const x0 = x[0];\nconst x1 = x[1];\nconst p_k = p[\"k\"];\nconst t_0 = Math.pow(p_k, 2);\nconst t_1 = t_0*Math.pow(x1, 2) + 1;\nconst t_2 = t_0*Math.pow(x0, 2);\nconst t_3 = 1/(t_1 + t_2);\nconst t_4 = t_0*t_3*x0*x1;\nreturn [t_1*t_3, t_4, t_4, t_3*(t_2 + 1)];",
+  "christoffel": "const x0 = x[0];\nconst x1 = x[1];\nconst p_k = p[\"k\"];\nconst t_0 = Math.pow(p_k, 2);\nconst t_1 = t_0/(t_0*Math.pow(x0, 2) + t_0*Math.pow(x1, 2) + 1);\nconst t_2 = t_1*x0;\nconst t_3 = t_1*x1;\nreturn [t_2, 0, 0, -t_2, -t_3, 0, 0, t_3];",
+  "scalar": "const x0 = x[0];\nconst x1 = x[1];\nconst p_k = p[\"k\"];\nconst t_0 = Math.pow(p_k, 2);\nreturn [-2*t_0/Math.pow(t_0*Math.pow(x0, 2) + t_0*Math.pow(x1, 2) + 1, 2)];",
+  "embedding": "const x0 = x[0];\nconst x1 = x[1];\nconst p_k = p[\"k\"];\nreturn [x0, x1, (1/2)*p_k*(Math.pow(x0, 2) - Math.pow(x1, 2))];"
+ },
+ "gaussian": "- \\frac{k^{2}}{\\left(k^{2} u^{2} + k^{2} v^{2} + 1\\right)^{2}}",
+ "kretschmann": "\\frac{4 k^{4}}{\\left(k^{2} u^{2} + k^{2} v^{2} + 1\\right)^{4}}",
+ "id": "saddle",
+ "title": "Сідло",
+ "kind": "surface",
+ "domain": [
+  [
+   -2,
+   2
+  ],
+  [
+   -2,
+   2
+  ]
+ ]
+}

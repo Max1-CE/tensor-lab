@@ -1,0 +1,117 @@
+{
+ "schema": 1,
+ "name": "cartesian",
+ "dim": 2,
+ "lorentzian": false,
+ "coords": [
+  {
+   "name": "x",
+   "latex": "x"
+  },
+  {
+   "name": "y",
+   "latex": "y"
+  }
+ ],
+ "params": [],
+ "metric": {
+  "latex": "\\left[\\begin{matrix}1 & 0\\\\0 & 1\\end{matrix}\\right]",
+  "components": [
+   [
+    "1",
+    "0"
+   ],
+   [
+    "0",
+    "1"
+   ]
+  ]
+ },
+ "inverse": {
+  "latex": "\\left[\\begin{matrix}1 & 0\\\\0 & 1\\end{matrix}\\right]",
+  "components": [
+   [
+    "1",
+    "0"
+   ],
+   [
+    "0",
+    "1"
+   ]
+  ]
+ },
+ "det": "1",
+ "sqrtAbsDet": "1",
+ "kroneckerOk": true,
+ "lineElement": "ds^{2} = dx^{2} + dy^{2}",
+ "christoffel": [],
+ "riemann": {
+  "independentCount": 1,
+  "nonzero": []
+ },
+ "ricci": [],
+ "ricciFlat": true,
+ "scalar": "0",
+ "einstein": [],
+ "leviCivita": {
+  "latex": "\\varepsilon_{x y} = \\sqrt{|g|} = 1",
+  "lower": [
+   {
+    "indices": [
+     0,
+     1
+    ],
+    "value": "1"
+   },
+   {
+    "indices": [
+     1,
+     0
+    ],
+    "value": "-1"
+   }
+  ],
+  "upper": [
+   {
+    "indices": [
+     0,
+     1
+    ],
+    "value": "1"
+   },
+   {
+    "indices": [
+     1,
+     0
+    ],
+    "value": "-1"
+   }
+  ]
+ },
+ "geodesics": [
+  "\\ddot{x} = 0",
+  "\\ddot{y} = 0"
+ ],
+ "js": {
+  "metric": "const x0 = x[0];\nconst x1 = x[1];\nreturn [1, 0, 0, 1];",
+  "inverse": "const x0 = x[0];\nconst x1 = x[1];\nreturn [1, 0, 0, 1];",
+  "christoffel": "const x0 = x[0];\nconst x1 = x[1];\nreturn [0, 0, 0, 0, 0, 0, 0, 0];",
+  "scalar": "const x0 = x[0];\nconst x1 = x[1];\nreturn [0];",
+  "embedding": "const x0 = x[0];\nconst x1 = x[1];\nreturn [x0, x1];"
+ },
+ "gaussian": "0",
+ "kretschmann": "0",
+ "id": "cartesian",
+ "title": "Декартова",
+ "kind": "plane",
+ "domain": [
+  [
+   -4,
+   4
+  ],
+  [
+   -4,
+   4
+  ]
+ ]
+}

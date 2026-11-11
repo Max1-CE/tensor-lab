@@ -1,0 +1,165 @@
+{
+ "schema": 1,
+ "name": "sphere",
+ "dim": 2,
+ "lorentzian": false,
+ "coords": [
+  {
+   "name": "theta",
+   "latex": "\\theta"
+  },
+  {
+   "name": "phi",
+   "latex": "\\phi"
+  }
+ ],
+ "params": [
+  {
+   "name": "a",
+   "latex": "a",
+   "default": 1.0
+  }
+ ],
+ "metric": {
+  "latex": "\\left[\\begin{matrix}a^{2} & 0\\\\0 & a^{2} \\sin^{2}{\\left(\\theta \\right)}\\end{matrix}\\right]",
+  "components": [
+   [
+    "a^{2}",
+    "0"
+   ],
+   [
+    "0",
+    "a^{2} \\sin^{2}{\\left(\\theta \\right)}"
+   ]
+  ]
+ },
+ "inverse": {
+  "latex": "\\left[\\begin{matrix}\\frac{1}{a^{2}} & 0\\\\0 & \\frac{1}{a^{2} \\sin^{2}{\\left(\\theta \\right)}}\\end{matrix}\\right]",
+  "components": [
+   [
+    "\\frac{1}{a^{2}}",
+    "0"
+   ],
+   [
+    "0",
+    "\\frac{1}{a^{2} \\sin^{2}{\\left(\\theta \\right)}}"
+   ]
+  ]
+ },
+ "det": "a^{4} \\sin^{2}{\\left(\\theta \\right)}",
+ "sqrtAbsDet": "a^{2} \\sin{\\left(\\theta \\right)}",
+ "kroneckerOk": true,
+ "lineElement": "ds^{2} = a^{2}\\,d\\theta^{2} + a^{2} \\sin^{2}{\\left(\\theta \\right)}\\,d\\phi^{2}",
+ "christoffel": [
+  {
+   "upper": 0,
+   "lower": [
+    1,
+    1
+   ],
+   "latex": "\\Gamma^{\\theta}_{\\phi \\phi} = - \\sin{\\left(\\theta \\right)} \\cos{\\left(\\theta \\right)}"
+  },
+  {
+   "upper": 1,
+   "lower": [
+    0,
+    1
+   ],
+   "latex": "\\Gamma^{\\phi}_{\\theta \\phi} = \\cot{\\left(\\theta \\right)}"
+  }
+ ],
+ "riemann": {
+  "independentCount": 1,
+  "nonzero": [
+   {
+    "indices": [
+     0,
+     1,
+     0,
+     1
+    ],
+    "latex": "R_{\\theta \\phi \\theta \\phi} = a^{2} \\sin^{2}{\\left(\\theta \\right)}"
+   }
+  ]
+ },
+ "ricci": [
+  {
+   "indices": [
+    0,
+    0
+   ],
+   "latex": "R_{\\theta \\theta} = 1"
+  },
+  {
+   "indices": [
+    1,
+    1
+   ],
+   "latex": "R_{\\phi \\phi} = \\sin^{2}{\\left(\\theta \\right)}"
+  }
+ ],
+ "ricciFlat": false,
+ "scalar": "\\frac{2}{a^{2}}",
+ "einstein": [],
+ "leviCivita": {
+  "latex": "\\varepsilon_{\\theta \\phi} = \\sqrt{|g|} = a^{2} \\sin{\\left(\\theta \\right)}",
+  "lower": [
+   {
+    "indices": [
+     0,
+     1
+    ],
+    "value": "a^{2} \\sin{\\left(\\theta \\right)}"
+   },
+   {
+    "indices": [
+     1,
+     0
+    ],
+    "value": "- a^{2} \\sin{\\left(\\theta \\right)}"
+   }
+  ],
+  "upper": [
+   {
+    "indices": [
+     0,
+     1
+    ],
+    "value": "\\frac{1}{a^{2} \\sin{\\left(\\theta \\right)}}"
+   },
+   {
+    "indices": [
+     1,
+     0
+    ],
+    "value": "- \\frac{1}{a^{2} \\sin{\\left(\\theta \\right)}}"
+   }
+  ]
+ },
+ "geodesics": [
+  "\\ddot{\\theta} = \\dot{\\phi}^{2} \\sin{\\left(\\theta \\right)} \\cos{\\left(\\theta \\right)}",
+  "\\ddot{\\phi} = - 2 \\dot{\\phi} \\dot{\\theta} \\cot{\\left(\\theta \\right)}"
+ ],
+ "js": {
+  "metric": "const x0 = x[0];\nconst x1 = x[1];\nconst p_a = p[\"a\"];\nconst t_0 = Math.pow(p_a, 2);\nreturn [t_0, 0, 0, t_0*Math.pow(Math.sin(x0), 2)];",
+  "inverse": "const x0 = x[0];\nconst x1 = x[1];\nconst p_a = p[\"a\"];\nconst t_0 = Math.pow(p_a, -2);\nreturn [t_0, 0, 0, t_0/Math.pow(Math.sin(x0), 2)];",
+  "christoffel": "const x0 = x[0];\nconst x1 = x[1];\nconst p_a = p[\"a\"];\nconst t_0 = (1/Math.tan(x0));\nreturn [0, 0, 0, -Math.sin(x0)*Math.cos(x0), 0, t_0, t_0, 0];",
+  "scalar": "const x0 = x[0];\nconst x1 = x[1];\nconst p_a = p[\"a\"];\nreturn [2/Math.pow(p_a, 2)];",
+  "embedding": "const x0 = x[0];\nconst x1 = x[1];\nconst p_a = p[\"a\"];\nconst t_0 = p_a*Math.sin(x0);\nreturn [t_0*Math.cos(x1), t_0*Math.sin(x1), p_a*Math.cos(x0)];"
+ },
+ "gaussian": "\\frac{1}{a^{2}}",
+ "kretschmann": "\\frac{4}{a^{4}}",
+ "id": "sphere",
+ "title": "Сфера",
+ "kind": "surface",
+ "domain": [
+  [
+   0,
+   3.141592653589793
+  ],
+  [
+   0,
+   6.283185307179586
+  ]
+ ]
+}

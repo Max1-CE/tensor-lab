@@ -1,0 +1,166 @@
+{
+ "schema": 1,
+ "name": "parabolic",
+ "dim": 2,
+ "lorentzian": false,
+ "coords": [
+  {
+   "name": "sigma",
+   "latex": "\\sigma"
+  },
+  {
+   "name": "tau",
+   "latex": "\\tau"
+  }
+ ],
+ "params": [],
+ "metric": {
+  "latex": "\\left[\\begin{matrix}\\sigma^{2} + \\tau^{2} & 0\\\\0 & \\sigma^{2} + \\tau^{2}\\end{matrix}\\right]",
+  "components": [
+   [
+    "\\sigma^{2} + \\tau^{2}",
+    "0"
+   ],
+   [
+    "0",
+    "\\sigma^{2} + \\tau^{2}"
+   ]
+  ]
+ },
+ "inverse": {
+  "latex": "\\left[\\begin{matrix}\\frac{1}{\\sigma^{2} + \\tau^{2}} & 0\\\\0 & \\frac{1}{\\sigma^{2} + \\tau^{2}}\\end{matrix}\\right]",
+  "components": [
+   [
+    "\\frac{1}{\\sigma^{2} + \\tau^{2}}",
+    "0"
+   ],
+   [
+    "0",
+    "\\frac{1}{\\sigma^{2} + \\tau^{2}}"
+   ]
+  ]
+ },
+ "det": "\\left(\\sigma^{2} + \\tau^{2}\\right)^{2}",
+ "sqrtAbsDet": "\\sigma^{2} + \\tau^{2}",
+ "kroneckerOk": true,
+ "lineElement": "ds^{2} = \\left(\\sigma^{2} + \\tau^{2}\\right)\\,d\\sigma^{2} + \\left(\\sigma^{2} + \\tau^{2}\\right)\\,d\\tau^{2}",
+ "christoffel": [
+  {
+   "upper": 0,
+   "lower": [
+    0,
+    0
+   ],
+   "latex": "\\Gamma^{\\sigma}_{\\sigma \\sigma} = \\frac{\\sigma}{\\sigma^{2} + \\tau^{2}}"
+  },
+  {
+   "upper": 0,
+   "lower": [
+    0,
+    1
+   ],
+   "latex": "\\Gamma^{\\sigma}_{\\sigma \\tau} = \\frac{\\tau}{\\sigma^{2} + \\tau^{2}}"
+  },
+  {
+   "upper": 0,
+   "lower": [
+    1,
+    1
+   ],
+   "latex": "\\Gamma^{\\sigma}_{\\tau \\tau} = - \\frac{\\sigma}{\\sigma^{2} + \\tau^{2}}"
+  },
+  {
+   "upper": 1,
+   "lower": [
+    0,
+    0
+   ],
+   "latex": "\\Gamma^{\\tau}_{\\sigma \\sigma} = - \\frac{\\tau}{\\sigma^{2} + \\tau^{2}}"
+  },
+  {
+   "upper": 1,
+   "lower": [
+    0,
+    1
+   ],
+   "latex": "\\Gamma^{\\tau}_{\\sigma \\tau} = \\frac{\\sigma}{\\sigma^{2} + \\tau^{2}}"
+  },
+  {
+   "upper": 1,
+   "lower": [
+    1,
+    1
+   ],
+   "latex": "\\Gamma^{\\tau}_{\\tau \\tau} = \\frac{\\tau}{\\sigma^{2} + \\tau^{2}}"
+  }
+ ],
+ "riemann": {
+  "independentCount": 1,
+  "nonzero": []
+ },
+ "ricci": [],
+ "ricciFlat": true,
+ "scalar": "0",
+ "einstein": [],
+ "leviCivita": {
+  "latex": "\\varepsilon_{\\sigma \\tau} = \\sqrt{|g|} = \\sigma^{2} + \\tau^{2}",
+  "lower": [
+   {
+    "indices": [
+     0,
+     1
+    ],
+    "value": "\\sigma^{2} + \\tau^{2}"
+   },
+   {
+    "indices": [
+     1,
+     0
+    ],
+    "value": "- \\sigma^{2} - \\tau^{2}"
+   }
+  ],
+  "upper": [
+   {
+    "indices": [
+     0,
+     1
+    ],
+    "value": "\\frac{1}{\\sigma^{2} + \\tau^{2}}"
+   },
+   {
+    "indices": [
+     1,
+     0
+    ],
+    "value": "- \\frac{1}{\\sigma^{2} + \\tau^{2}}"
+   }
+  ]
+ },
+ "geodesics": [
+  "\\ddot{\\sigma} = \\frac{- \\sigma \\dot{\\sigma}^{2} + \\sigma \\dot{\\tau}^{2} - 2 \\tau \\dot{\\sigma} \\dot{\\tau}}{\\sigma^{2} + \\tau^{2}}",
+  "\\ddot{\\tau} = \\frac{- 2 \\sigma \\dot{\\sigma} \\dot{\\tau} + \\tau \\dot{\\sigma}^{2} - \\tau \\dot{\\tau}^{2}}{\\sigma^{2} + \\tau^{2}}"
+ ],
+ "js": {
+  "metric": "const x0 = x[0];\nconst x1 = x[1];\nconst t_0 = Math.pow(x0, 2) + Math.pow(x1, 2);\nreturn [t_0, 0, 0, t_0];",
+  "inverse": "const x0 = x[0];\nconst x1 = x[1];\nconst t_0 = 1/(Math.pow(x0, 2) + Math.pow(x1, 2));\nreturn [t_0, 0, 0, t_0];",
+  "christoffel": "const x0 = x[0];\nconst x1 = x[1];\nconst t_0 = 1/(Math.pow(x0, 2) + Math.pow(x1, 2));\nconst t_1 = t_0*x0;\nconst t_2 = t_0*x1;\nreturn [t_1, t_2, t_2, -t_1, -t_2, t_1, t_1, t_2];",
+  "scalar": "const x0 = x[0];\nconst x1 = x[1];\nreturn [0];",
+  "embedding": "const x0 = x[0];\nconst x1 = x[1];\nreturn [x0*x1, (1/2)*(-Math.pow(x0, 2) + Math.pow(x1, 2))];"
+ },
+ "gaussian": "0",
+ "kretschmann": "0",
+ "id": "parabolic",
+ "title": "Параболічна",
+ "kind": "plane",
+ "domain": [
+  [
+   -2.5,
+   2.5
+  ],
+  [
+   0,
+   2.5
+  ]
+ ]
+}

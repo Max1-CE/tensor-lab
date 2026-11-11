@@ -1,0 +1,172 @@
+{
+ "schema": 1,
+ "name": "elliptic",
+ "dim": 2,
+ "lorentzian": false,
+ "coords": [
+  {
+   "name": "mu",
+   "latex": "\\mu"
+  },
+  {
+   "name": "nu",
+   "latex": "\\nu"
+  }
+ ],
+ "params": [
+  {
+   "name": "a",
+   "latex": "a",
+   "default": 1.0
+  }
+ ],
+ "metric": {
+  "latex": "\\left[\\begin{matrix}a^{2} \\left(\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}\\right) & 0\\\\0 & a^{2} \\left(\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}\\right)\\end{matrix}\\right]",
+  "components": [
+   [
+    "a^{2} \\left(\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}\\right)",
+    "0"
+   ],
+   [
+    "0",
+    "a^{2} \\left(\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}\\right)"
+   ]
+  ]
+ },
+ "inverse": {
+  "latex": "\\left[\\begin{matrix}\\frac{1}{a^{2} \\left(\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}\\right)} & 0\\\\0 & \\frac{1}{a^{2} \\left(\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}\\right)}\\end{matrix}\\right]",
+  "components": [
+   [
+    "\\frac{1}{a^{2} \\left(\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}\\right)}",
+    "0"
+   ],
+   [
+    "0",
+    "\\frac{1}{a^{2} \\left(\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}\\right)}"
+   ]
+  ]
+ },
+ "det": "a^{4} \\left(\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}\\right)^{2}",
+ "sqrtAbsDet": "a^{2} \\left(\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}\\right)",
+ "kroneckerOk": true,
+ "lineElement": "ds^{2} = a^{2} \\left(\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}\\right)\\,d\\mu^{2} + a^{2} \\left(\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}\\right)\\,d\\nu^{2}",
+ "christoffel": [
+  {
+   "upper": 0,
+   "lower": [
+    0,
+    0
+   ],
+   "latex": "\\Gamma^{\\mu}_{\\mu \\mu} = \\frac{\\sinh{\\left(\\mu \\right)} \\cosh{\\left(\\mu \\right)}}{\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}}"
+  },
+  {
+   "upper": 0,
+   "lower": [
+    0,
+    1
+   ],
+   "latex": "\\Gamma^{\\mu}_{\\mu \\nu} = \\frac{\\sin{\\left(\\nu \\right)} \\cos{\\left(\\nu \\right)}}{\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}}"
+  },
+  {
+   "upper": 0,
+   "lower": [
+    1,
+    1
+   ],
+   "latex": "\\Gamma^{\\mu}_{\\nu \\nu} = - \\frac{\\sinh{\\left(\\mu \\right)} \\cosh{\\left(\\mu \\right)}}{\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}}"
+  },
+  {
+   "upper": 1,
+   "lower": [
+    0,
+    0
+   ],
+   "latex": "\\Gamma^{\\nu}_{\\mu \\mu} = - \\frac{\\sin{\\left(\\nu \\right)} \\cos{\\left(\\nu \\right)}}{\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}}"
+  },
+  {
+   "upper": 1,
+   "lower": [
+    0,
+    1
+   ],
+   "latex": "\\Gamma^{\\nu}_{\\mu \\nu} = \\frac{\\sinh{\\left(\\mu \\right)} \\cosh{\\left(\\mu \\right)}}{\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}}"
+  },
+  {
+   "upper": 1,
+   "lower": [
+    1,
+    1
+   ],
+   "latex": "\\Gamma^{\\nu}_{\\nu \\nu} = \\frac{\\sin{\\left(\\nu \\right)} \\cos{\\left(\\nu \\right)}}{\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}}"
+  }
+ ],
+ "riemann": {
+  "independentCount": 1,
+  "nonzero": []
+ },
+ "ricci": [],
+ "ricciFlat": true,
+ "scalar": "0",
+ "einstein": [],
+ "leviCivita": {
+  "latex": "\\varepsilon_{\\mu \\nu} = \\sqrt{|g|} = a^{2} \\left(\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}\\right)",
+  "lower": [
+   {
+    "indices": [
+     0,
+     1
+    ],
+    "value": "a^{2} \\left(\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}\\right)"
+   },
+   {
+    "indices": [
+     1,
+     0
+    ],
+    "value": "- a^{2} \\left(\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}\\right)"
+   }
+  ],
+  "upper": [
+   {
+    "indices": [
+     0,
+     1
+    ],
+    "value": "\\frac{1}{a^{2} \\left(\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}\\right)}"
+   },
+   {
+    "indices": [
+     1,
+     0
+    ],
+    "value": "- \\frac{1}{a^{2} \\left(\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}\\right)}"
+   }
+  ]
+ },
+ "geodesics": [
+  "\\ddot{\\mu} = \\frac{- \\dot{\\mu}^{2} \\sinh{\\left(\\mu \\right)} \\cosh{\\left(\\mu \\right)} - 2 \\dot{\\mu} \\dot{\\nu} \\sin{\\left(\\nu \\right)} \\cos{\\left(\\nu \\right)} + \\dot{\\nu}^{2} \\sinh{\\left(\\mu \\right)} \\cosh{\\left(\\mu \\right)}}{\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}}",
+  "\\ddot{\\nu} = \\frac{\\dot{\\mu}^{2} \\sin{\\left(\\nu \\right)} \\cos{\\left(\\nu \\right)} - 2 \\dot{\\mu} \\dot{\\nu} \\sinh{\\left(\\mu \\right)} \\cosh{\\left(\\mu \\right)} - \\dot{\\nu}^{2} \\sin{\\left(\\nu \\right)} \\cos{\\left(\\nu \\right)}}{\\sin^{2}{\\left(\\nu \\right)} + \\sinh^{2}{\\left(\\mu \\right)}}"
+ ],
+ "js": {
+  "metric": "const x0 = x[0];\nconst x1 = x[1];\nconst p_a = p[\"a\"];\nconst t_0 = Math.pow(p_a, 2)*(Math.pow(Math.sin(x1), 2) + Math.pow(Math.sinh(x0), 2));\nreturn [t_0, 0, 0, t_0];",
+  "inverse": "const x0 = x[0];\nconst x1 = x[1];\nconst p_a = p[\"a\"];\nconst t_0 = 1/(Math.pow(p_a, 2)*(Math.pow(Math.sin(x1), 2) + Math.pow(Math.sinh(x0), 2)));\nreturn [t_0, 0, 0, t_0];",
+  "christoffel": "const x0 = x[0];\nconst x1 = x[1];\nconst p_a = p[\"a\"];\nconst t_0 = Math.sinh(x0);\nconst t_1 = Math.sin(x1);\nconst t_2 = 1/(Math.pow(t_0, 2) + Math.pow(t_1, 2));\nconst t_3 = t_0*t_2*Math.cosh(x0);\nconst t_4 = t_1*t_2*Math.cos(x1);\nreturn [t_3, t_4, t_4, -t_3, -t_4, t_3, t_3, t_4];",
+  "scalar": "const x0 = x[0];\nconst x1 = x[1];\nconst p_a = p[\"a\"];\nreturn [0];",
+  "embedding": "const x0 = x[0];\nconst x1 = x[1];\nconst p_a = p[\"a\"];\nreturn [p_a*Math.cos(x1)*Math.cosh(x0), p_a*Math.sin(x1)*Math.sinh(x0)];"
+ },
+ "gaussian": "0",
+ "kretschmann": "0",
+ "id": "elliptic",
+ "title": "Еліптична",
+ "kind": "plane",
+ "domain": [
+  [
+   0,
+   2
+  ],
+  [
+   0,
+   6.283185307179586
+  ]
+ ]
+}

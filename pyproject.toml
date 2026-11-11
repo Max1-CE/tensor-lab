@@ -1,0 +1,17 @@
+[project]
+name = "tensor-lab-core"
+version = "0.1.0"
+description = "Symbolic tensor-calculus kernel of Tensor Lab (SymPy, runs in Pyodide)"
+license = "MIT"
+requires-python = ">=3.11"
+dependencies = ["sympy>=1.12"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.setuptools]
+packages = ["core"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

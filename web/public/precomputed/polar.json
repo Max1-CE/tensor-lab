@@ -1,0 +1,134 @@
+{
+ "schema": 1,
+ "name": "polar",
+ "dim": 2,
+ "lorentzian": false,
+ "coords": [
+  {
+   "name": "r",
+   "latex": "r"
+  },
+  {
+   "name": "phi",
+   "latex": "\\phi"
+  }
+ ],
+ "params": [],
+ "metric": {
+  "latex": "\\left[\\begin{matrix}1 & 0\\\\0 & r^{2}\\end{matrix}\\right]",
+  "components": [
+   [
+    "1",
+    "0"
+   ],
+   [
+    "0",
+    "r^{2}"
+   ]
+  ]
+ },
+ "inverse": {
+  "latex": "\\left[\\begin{matrix}1 & 0\\\\0 & \\frac{1}{r^{2}}\\end{matrix}\\right]",
+  "components": [
+   [
+    "1",
+    "0"
+   ],
+   [
+    "0",
+    "\\frac{1}{r^{2}}"
+   ]
+  ]
+ },
+ "det": "r^{2}",
+ "sqrtAbsDet": "r",
+ "kroneckerOk": true,
+ "lineElement": "ds^{2} = dr^{2} + r^{2}\\,d\\phi^{2}",
+ "christoffel": [
+  {
+   "upper": 0,
+   "lower": [
+    1,
+    1
+   ],
+   "latex": "\\Gamma^{r}_{\\phi \\phi} = - r"
+  },
+  {
+   "upper": 1,
+   "lower": [
+    0,
+    1
+   ],
+   "latex": "\\Gamma^{\\phi}_{r \\phi} = \\frac{1}{r}"
+  }
+ ],
+ "riemann": {
+  "independentCount": 1,
+  "nonzero": []
+ },
+ "ricci": [],
+ "ricciFlat": true,
+ "scalar": "0",
+ "einstein": [],
+ "leviCivita": {
+  "latex": "\\varepsilon_{r \\phi} = \\sqrt{|g|} = r",
+  "lower": [
+   {
+    "indices": [
+     0,
+     1
+    ],
+    "value": "r"
+   },
+   {
+    "indices": [
+     1,
+     0
+    ],
+    "value": "- r"
+   }
+  ],
+  "upper": [
+   {
+    "indices": [
+     0,
+     1
+    ],
+    "value": "\\frac{1}{r}"
+   },
+   {
+    "indices": [
+     1,
+     0
+    ],
+    "value": "- \\frac{1}{r}"
+   }
+  ]
+ },
+ "geodesics": [
+  "\\ddot{r} = r \\dot{\\phi}^{2}",
+  "\\ddot{\\phi} = - \\frac{2 \\dot{\\phi} \\dot{r}}{r}"
+ ],
+ "js": {
+  "metric": "const x0 = x[0];\nconst x1 = x[1];\nreturn [1, 0, 0, Math.pow(x0, 2)];",
+  "inverse": "const x0 = x[0];\nconst x1 = x[1];\nreturn [1, 0, 0, Math.pow(x0, -2)];",
+  "christoffel": "const x0 = x[0];\nconst x1 = x[1];\nconst t_0 = 1/x0;\nreturn [0, 0, 0, -x0, 0, t_0, t_0, 0];",
+  "scalar": "const x0 = x[0];\nconst x1 = x[1];\nreturn [0];",
+  "embedding": "const x0 = x[0];\nconst x1 = x[1];\nreturn [x0*Math.cos(x1), x0*Math.sin(x1)];"
+ },
+ "gaussian": "0",
+ "kretschmann": "0",
+ "id": "polar",
+ "title": "Полярна",
+ "kind": "plane",
+ "domain": [
+  [
+   0,
+   4
+  ],
+  [
+   0,
+   6.283185307179586
+  ]
+ ]
+}

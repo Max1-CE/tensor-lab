@@ -1,0 +1,170 @@
+{
+ "schema": 1,
+ "name": "torus",
+ "dim": 2,
+ "lorentzian": false,
+ "coords": [
+  {
+   "name": "u",
+   "latex": "u"
+  },
+  {
+   "name": "v",
+   "latex": "v"
+  }
+ ],
+ "params": [
+  {
+   "name": "R",
+   "latex": "R",
+   "default": 2.0
+  },
+  {
+   "name": "b",
+   "latex": "b",
+   "default": 1.0
+  }
+ ],
+ "metric": {
+  "latex": "\\left[\\begin{matrix}\\left(R + b \\cos{\\left(v \\right)}\\right)^{2} & 0\\\\0 & b^{2}\\end{matrix}\\right]",
+  "components": [
+   [
+    "\\left(R + b \\cos{\\left(v \\right)}\\right)^{2}",
+    "0"
+   ],
+   [
+    "0",
+    "b^{2}"
+   ]
+  ]
+ },
+ "inverse": {
+  "latex": "\\left[\\begin{matrix}\\frac{1}{\\left(R + b \\cos{\\left(v \\right)}\\right)^{2}} & 0\\\\0 & \\frac{1}{b^{2}}\\end{matrix}\\right]",
+  "components": [
+   [
+    "\\frac{1}{\\left(R + b \\cos{\\left(v \\right)}\\right)^{2}}",
+    "0"
+   ],
+   [
+    "0",
+    "\\frac{1}{b^{2}}"
+   ]
+  ]
+ },
+ "det": "b^{2} \\left(R + b \\cos{\\left(v \\right)}\\right)^{2}",
+ "sqrtAbsDet": "b \\left(R + b \\cos{\\left(v \\right)}\\right)",
+ "kroneckerOk": true,
+ "lineElement": "ds^{2} = \\left(R + b \\cos{\\left(v \\right)}\\right)^{2}\\,du^{2} + b^{2}\\,dv^{2}",
+ "christoffel": [
+  {
+   "upper": 0,
+   "lower": [
+    0,
+    1
+   ],
+   "latex": "\\Gamma^{u}_{u v} = - \\frac{b \\sin{\\left(v \\right)}}{R + b \\cos{\\left(v \\right)}}"
+  },
+  {
+   "upper": 1,
+   "lower": [
+    0,
+    0
+   ],
+   "latex": "\\Gamma^{v}_{u u} = \\frac{\\left(R + b \\cos{\\left(v \\right)}\\right) \\sin{\\left(v \\right)}}{b}"
+  }
+ ],
+ "riemann": {
+  "independentCount": 1,
+  "nonzero": [
+   {
+    "indices": [
+     0,
+     1,
+     0,
+     1
+    ],
+    "latex": "R_{u v u v} = b \\left(R + b \\cos{\\left(v \\right)}\\right) \\cos{\\left(v \\right)}"
+   }
+  ]
+ },
+ "ricci": [
+  {
+   "indices": [
+    0,
+    0
+   ],
+   "latex": "R_{u u} = \\frac{\\left(R + b \\cos{\\left(v \\right)}\\right) \\cos{\\left(v \\right)}}{b}"
+  },
+  {
+   "indices": [
+    1,
+    1
+   ],
+   "latex": "R_{v v} = \\frac{b \\cos{\\left(v \\right)}}{R + b \\cos{\\left(v \\right)}}"
+  }
+ ],
+ "ricciFlat": false,
+ "scalar": "\\frac{2 \\cos{\\left(v \\right)}}{b \\left(R + b \\cos{\\left(v \\right)}\\right)}",
+ "einstein": [],
+ "leviCivita": {
+  "latex": "\\varepsilon_{u v} = \\sqrt{|g|} = b \\left(R + b \\cos{\\left(v \\right)}\\right)",
+  "lower": [
+   {
+    "indices": [
+     0,
+     1
+    ],
+    "value": "b \\left(R + b \\cos{\\left(v \\right)}\\right)"
+   },
+   {
+    "indices": [
+     1,
+     0
+    ],
+    "value": "- b \\left(R + b \\cos{\\left(v \\right)}\\right)"
+   }
+  ],
+  "upper": [
+   {
+    "indices": [
+     0,
+     1
+    ],
+    "value": "\\frac{1}{b \\left(R + b \\cos{\\left(v \\right)}\\right)}"
+   },
+   {
+    "indices": [
+     1,
+     0
+    ],
+    "value": "- \\frac{1}{b \\left(R + b \\cos{\\left(v \\right)}\\right)}"
+   }
+  ]
+ },
+ "geodesics": [
+  "\\ddot{u} = \\frac{2 b \\dot{u} \\dot{v} \\sin{\\left(v \\right)}}{R + b \\cos{\\left(v \\right)}}",
+  "\\ddot{v} = - \\frac{\\dot{u}^{2} \\left(R + b \\cos{\\left(v \\right)}\\right) \\sin{\\left(v \\right)}}{b}"
+ ],
+ "js": {
+  "metric": "const x0 = x[0];\nconst x1 = x[1];\nconst p_R = p[\"R\"];\nconst p_b = p[\"b\"];\nreturn [Math.pow(p_R + p_b*Math.cos(x1), 2), 0, 0, Math.pow(p_b, 2)];",
+  "inverse": "const x0 = x[0];\nconst x1 = x[1];\nconst p_R = p[\"R\"];\nconst p_b = p[\"b\"];\nreturn [Math.pow(p_R + p_b*Math.cos(x1), -2), 0, 0, Math.pow(p_b, -2)];",
+  "christoffel": "const x0 = x[0];\nconst x1 = x[1];\nconst p_R = p[\"R\"];\nconst p_b = p[\"b\"];\nconst t_0 = Math.sin(x1);\nconst t_1 = p_R + p_b*Math.cos(x1);\nconst t_2 = -p_b*t_0/t_1;\nreturn [0, t_2, t_2, 0, t_0*t_1/p_b, 0, 0, 0];",
+  "scalar": "const x0 = x[0];\nconst x1 = x[1];\nconst p_R = p[\"R\"];\nconst p_b = p[\"b\"];\nconst t_0 = Math.cos(x1);\nreturn [2*t_0/(p_b*(p_R + p_b*t_0))];",
+  "embedding": "const x0 = x[0];\nconst x1 = x[1];\nconst p_R = p[\"R\"];\nconst p_b = p[\"b\"];\nconst t_0 = p_R + p_b*Math.cos(x1);\nreturn [t_0*Math.cos(x0), t_0*Math.sin(x0), p_b*Math.sin(x1)];"
+ },
+ "gaussian": "\\frac{\\cos{\\left(v \\right)}}{b \\left(R + b \\cos{\\left(v \\right)}\\right)}",
+ "kretschmann": "\\frac{4 \\cos^{2}{\\left(v \\right)}}{b^{2} \\left(R + b \\cos{\\left(v \\right)}\\right)^{2}}",
+ "id": "torus",
+ "title": "Тор",
+ "kind": "surface",
+ "domain": [
+  [
+   0,
+   6.283185307179586
+  ],
+  [
+   0,
+   6.283185307179586
+  ]
+ ]
+}

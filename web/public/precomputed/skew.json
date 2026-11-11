@@ -1,0 +1,123 @@
+{
+ "schema": 1,
+ "name": "skew",
+ "dim": 2,
+ "lorentzian": false,
+ "coords": [
+  {
+   "name": "u",
+   "latex": "u"
+  },
+  {
+   "name": "v",
+   "latex": "v"
+  }
+ ],
+ "params": [
+  {
+   "name": "alpha",
+   "latex": "\\alpha",
+   "default": 1.0471975511965976
+  }
+ ],
+ "metric": {
+  "latex": "\\left[\\begin{matrix}1 & \\cos{\\left(\\alpha \\right)}\\\\\\cos{\\left(\\alpha \\right)} & 1\\end{matrix}\\right]",
+  "components": [
+   [
+    "1",
+    "\\cos{\\left(\\alpha \\right)}"
+   ],
+   [
+    "\\cos{\\left(\\alpha \\right)}",
+    "1"
+   ]
+  ]
+ },
+ "inverse": {
+  "latex": "\\left[\\begin{matrix}\\frac{1}{\\sin^{2}{\\left(\\alpha \\right)}} & - \\frac{\\cos{\\left(\\alpha \\right)}}{\\sin^{2}{\\left(\\alpha \\right)}}\\\\- \\frac{\\cos{\\left(\\alpha \\right)}}{\\sin^{2}{\\left(\\alpha \\right)}} & \\frac{1}{\\sin^{2}{\\left(\\alpha \\right)}}\\end{matrix}\\right]",
+  "components": [
+   [
+    "\\frac{1}{\\sin^{2}{\\left(\\alpha \\right)}}",
+    "- \\frac{\\cos{\\left(\\alpha \\right)}}{\\sin^{2}{\\left(\\alpha \\right)}}"
+   ],
+   [
+    "- \\frac{\\cos{\\left(\\alpha \\right)}}{\\sin^{2}{\\left(\\alpha \\right)}}",
+    "\\frac{1}{\\sin^{2}{\\left(\\alpha \\right)}}"
+   ]
+  ]
+ },
+ "det": "\\sin^{2}{\\left(\\alpha \\right)}",
+ "sqrtAbsDet": "\\sin{\\left(\\alpha \\right)}",
+ "kroneckerOk": true,
+ "lineElement": "ds^{2} = du^{2} + 2 \\cos{\\left(\\alpha \\right)}\\,du\\,dv + dv^{2}",
+ "christoffel": [],
+ "riemann": {
+  "independentCount": 1,
+  "nonzero": []
+ },
+ "ricci": [],
+ "ricciFlat": true,
+ "scalar": "0",
+ "einstein": [],
+ "leviCivita": {
+  "latex": "\\varepsilon_{u v} = \\sqrt{|g|} = \\sin{\\left(\\alpha \\right)}",
+  "lower": [
+   {
+    "indices": [
+     0,
+     1
+    ],
+    "value": "\\sin{\\left(\\alpha \\right)}"
+   },
+   {
+    "indices": [
+     1,
+     0
+    ],
+    "value": "- \\sin{\\left(\\alpha \\right)}"
+   }
+  ],
+  "upper": [
+   {
+    "indices": [
+     0,
+     1
+    ],
+    "value": "\\frac{1}{\\sin{\\left(\\alpha \\right)}}"
+   },
+   {
+    "indices": [
+     1,
+     0
+    ],
+    "value": "- \\frac{1}{\\sin{\\left(\\alpha \\right)}}"
+   }
+  ]
+ },
+ "geodesics": [
+  "\\ddot{u} = 0",
+  "\\ddot{v} = 0"
+ ],
+ "js": {
+  "metric": "const x0 = x[0];\nconst x1 = x[1];\nconst p_alpha = p[\"alpha\"];\nconst t_0 = Math.cos(p_alpha);\nreturn [1, t_0, t_0, 1];",
+  "inverse": "const x0 = x[0];\nconst x1 = x[1];\nconst p_alpha = p[\"alpha\"];\nconst t_0 = Math.pow(Math.sin(p_alpha), -2);\nconst t_1 = -t_0*Math.cos(p_alpha);\nreturn [t_0, t_1, t_1, t_0];",
+  "christoffel": "const x0 = x[0];\nconst x1 = x[1];\nconst p_alpha = p[\"alpha\"];\nreturn [0, 0, 0, 0, 0, 0, 0, 0];",
+  "scalar": "const x0 = x[0];\nconst x1 = x[1];\nconst p_alpha = p[\"alpha\"];\nreturn [0];",
+  "embedding": "const x0 = x[0];\nconst x1 = x[1];\nconst p_alpha = p[\"alpha\"];\nreturn [x0 + x1*Math.cos(p_alpha), x1*Math.sin(p_alpha)];"
+ },
+ "gaussian": "0",
+ "kretschmann": "0",
+ "id": "skew",
+ "title": "Коса (афінна)",
+ "kind": "plane",
+ "domain": [
+  [
+   -4,
+   4
+  ],
+  [
+   -4,
+   4
+  ]
+ ]
+}
