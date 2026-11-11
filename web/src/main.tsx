@@ -6,6 +6,7 @@ import { createRoot } from "react-dom/client";
 import { App } from "./App";
 import { useLab } from "./state/store";
 import { analyzeCustom } from "./symbolic/client";
+import { useGR } from "./gr/store";
 import "./styles.css";
 
 createRoot(document.getElementById("root")!).render(
@@ -15,4 +16,4 @@ createRoot(document.getElementById("root")!).render(
 );
 
 // Test hooks for scripted checks (screenshots, e2e).
-Object.assign(window, { __lab: useLab, __analyzeCustom: analyzeCustom });
+Object.assign(window, { __lab: useLab, __gr: useGR, __analyzeCustom: analyzeCustom });

@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { uk } from "../i18n/uk";
 import { useLab, type ToolId } from "../state/store";
 import { TOOL_CARDS } from "../theory/cards";
+import { GR_MODULES } from "../gr/modules";
 
 const ICONS: Record<ToolId, ReactNode> = {
   frame: <path d="M5 19 L19 19 M5 19 L13 7 M17 17 L19 19 L17 21 M11 7.5 L13 7 L13.6 9" />,
@@ -16,6 +17,13 @@ const ICONS: Record<ToolId, ReactNode> = {
   geodesic: <path d="M4 12 C9 4 15 4 20 8 M4 12 C9 12 15 12 20 12 M4 12 C9 20 15 20 20 16" />,
   curvature: <path d="M3 17 C7 7 17 7 21 17 M3 17 C7 13 17 13 21 17" />,
   symbols: <path d="M5 8 C5 5 10 5 10 8 C10 11 5 11 5 14 C5 17 10 17 10 14 M14 9 C17 7 20 9 17 11 C20 13 17 16 14 14" />,
+};
+
+const GR_ICONS: Record<string, ReactNode> = {
+  embedding: <path d="M3 7 C8 7 9 18 12 18 C15 18 16 7 21 7 M6 10 H18" />,
+  orbits: <path d="M12 12 m-2 0 a2 2 0 1 0 4 0 a2 2 0 1 0 -4 0 M4 12 a8 4 0 1 0 16 0 a8 4 0 1 0 -16 0" />,
+  light: <path d="M3 6 C10 6 12 12 21 18 M12 12 m-2 0 a2 2 0 1 0 4 0 a2 2 0 1 0 -4 0" />,
+  kerr: <path d="M12 12 m-3 0 a3 3 0 1 0 6 0 a3 3 0 1 0 -6 0 M4 12 a8 8 0 0 1 14 -5 M18 7 l0 -3 M18 7 l-3 0" />,
 };
 
 export function Toolbar() {
@@ -40,6 +48,23 @@ export function Toolbar() {
           </button>
         ))}
       </nav>
+      {page === "gr" && (
+        <nav className="tools">
+          {GR_MODULES.map((m) => (
+            <button
+              key={m.id}
+              className={`tool${m.ready ? " on" : " later"}`}
+              title={m.ready ? m.title : `${m.title} — ${uk.gr.planned}`}
+              disabled={!m.ready}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden>
+                {GR_ICONS[m.id]}
+              </svg>
+              <span>{m.title}</span>
+            </button>
+          ))}
+        </nav>
+      )}
       {page === "geometry" && (
         <nav className="tools">
           {(Object.keys(ICONS) as ToolId[]).map((t) => {
