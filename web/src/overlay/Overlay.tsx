@@ -13,6 +13,7 @@ import type { Params } from "../symbolic/compile";
 import { COLORS } from "../ui/theme";
 import { Arrow, Grip, Label } from "./svg";
 import { AngleLayer, LengthLayer, MetricLayer, VectorLayer } from "./tools";
+import { ChristoffelLayer, FanLayer, SymbolsLayer, TransportLayer } from "./tools2";
 
 export type MoveFn = (w: V2, e: PointerEvent) => void;
 
@@ -46,10 +47,10 @@ const SHOW_FRAME: Record<ToolId, boolean> = {
   vector: true,
   angle: false,
   christoffel: true,
-  transport: true,
-  geodesic: true,
+  transport: false,
+  geodesic: false,
   curvature: true,
-  symbols: true,
+  symbols: false,
 };
 
 function FrameLayer({ ctx }: { ctx: LayerCtx }) {
@@ -162,6 +163,12 @@ export function Overlay() {
 
   const move = (e: PointerEvent) => {
     const d = drag.current;
+    if (!d && useLab.getState().tool === "curvature") {
+      const st = useLab.getState();
+      const w = worldOf(e);
+      const q = st.chart!.kind === "abstract" ? w : fromWorld(st.chart!, st.frame, w, st.hoverQ ?? st.probe, st.params);
+      st.set({ hoverQ: q });
+    }
     if (!d || d.pointer !== e.pointerId) return;
     if (!d.onMove) {
       const st = useLab.getState();
@@ -222,6 +229,10 @@ export function Overlay() {
       {s.tool === "length" && <LengthLayer ctx={ctx} />}
       {s.tool === "vector" && <VectorLayer ctx={ctx} />}
       {s.tool === "angle" && <AngleLayer ctx={ctx} />}
+      {s.tool === "christoffel" && <ChristoffelLayer ctx={ctx} />}
+      {s.tool === "transport" && <TransportLayer ctx={ctx} />}
+      {s.tool === "geodesic" && <FanLayer ctx={ctx} />}
+      {s.tool === "symbols" && <SymbolsLayer ctx={ctx} />}
     </svg>
   );
 }

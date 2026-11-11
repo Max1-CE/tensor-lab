@@ -45,6 +45,8 @@ export interface Chart {
   embed: (q: V2, p: Params) => V2;
   metricFn: VecFn;
   defaults: Params;
+  /** Surfaces: the embedding q → ℝ³ (for the 3D inset). */
+  surface?: (q: V2, p: Params) => [number, number, number];
 }
 
 const TAU = 2 * Math.PI;
@@ -74,6 +76,22 @@ export const DISPLAY: Record<string, ChartDisplay> = {
     affine: false,
     probe: [1, 1.2],
   },
+  // surfaces in ℝ³, shown as a 2D map of their chart (metric induced by the embedding)
+  sphere: {
+    axes: [ax(0.06, Math.PI - 0.06, 13, { min: 0.06 }), ax(0, TAU, 24, { periodic: true })],
+    affine: false,
+    probe: [1.0, 1.3],
+  },
+  torus: {
+    axes: [ax(0, TAU, 24, { periodic: true }), ax(0, TAU, 16, { periodic: true })],
+    affine: false,
+    probe: [0.9, 0.5],
+  },
+  saddle: {
+    axes: [ax(-2, 2, 17), ax(-2, 2, 17)],
+    affine: false,
+    probe: [0.6, 0.35],
+  },
 };
 
 export function displayFor(id: string, analysis: Analysis): ChartDisplay {
@@ -100,6 +118,8 @@ export function makeChart(analysis: Analysis, display?: ChartDisplay, id = analy
     embed: embedded ? (q, p) => embedFn!(q, p) as V2 : (q) => [q[0], q[1]],
     metricFn: c.metric,
     defaults: defaultParams(analysis),
+    surface:
+      analysis.kind === "surface" && embedFn ? (q, p) => embedFn(q, p) as [number, number, number] : undefined,
   };
 }
 

@@ -16,6 +16,7 @@ export const COLORS = {
   coordLine: "#5ee0ff", // coordinate-straight curve
   geodesic: "#7dff8a",
   cell: "#5eead4",
+  transport: "#ff9f43", // loop of parallel transport and the returned vector
 };
 
 export const rgba = (c: readonly [number, number, number], a: number) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;

@@ -22,7 +22,7 @@ function labelAt(base: V2, tip: V2, along = 16, side = 10): V2 {
 }
 
 /** Probe handle used by tools that hide the basis frame. */
-function ProbeGrip({ ctx, P }: { ctx: LayerCtx; P: V2 }) {
+export function ProbeGrip({ ctx, P }: { ctx: LayerCtx; P: V2 }) {
   if (ctx.chart.display.affine) return null;
   const move: MoveFn = (w) => {
     const st = useLab.getState();

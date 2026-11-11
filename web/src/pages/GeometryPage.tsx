@@ -8,6 +8,7 @@ import { useLab } from "../state/store";
 import { loadIndex, loadPreset } from "../symbolic/presets";
 import { ToolPanel } from "../ui/ToolPanels";
 import { SidePanel } from "../ui/SidePanel";
+import { SurfaceInset } from "../ui/SurfaceInset";
 import { TheoryDrawer } from "../ui/TheoryDrawer";
 
 export function GeometryPage() {
@@ -46,6 +47,7 @@ export function GeometryPage() {
         <SidePanel />
         <ToolPanel />
       </div>
+      <SurfaceInset />
       <TheoryDrawer />
     </main>
   );

@@ -8,6 +8,7 @@ import { useLab } from "../state/store";
 import { angleInfo, lengthInfo, metricInfo, vectorInfo } from "../tools/compute";
 import { fmt, isIdentity, Matrix, MetricPanel, useHot } from "./MetricPanel";
 import { RichText, Tex } from "./Tex";
+import { ToolPanel2 } from "./ToolPanels2";
 import { COLORS } from "./theme";
 
 const T = uk.toolPanels;
@@ -232,7 +233,9 @@ export function ToolPanel() {
       return <VectorPanel />;
     case "angle":
       return <AnglePanel />;
-    default:
+    case "frame":
       return <MetricPanel />;
+    default:
+      return <ToolPanel2 tool={tool} />;
   }
 }

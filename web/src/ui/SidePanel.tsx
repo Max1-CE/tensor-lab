@@ -116,16 +116,18 @@ export function SidePanel() {
     useLab.getState().setChart(makeChart(a));
   };
 
-  const planes = index.filter((p) => p.kind === "plane");
+  const chip = (p: (typeof index)[number]) => (
+    <button key={p.id} className={chart?.id === p.id && !customOpen ? "chip on" : "chip"} onClick={() => pick(p.id)}>
+      {p.title}
+    </button>
+  );
   return (
     <section className="panel side-panel">
       <h2>{uk.panel.system}</h2>
+      <div className="chips">{index.filter((p) => p.kind === "plane").map(chip)}</div>
+      <div className="chip-group">{uk.panel.surfaces}</div>
       <div className="chips">
-        {planes.map((p) => (
-          <button key={p.id} className={chart?.id === p.id && !customOpen ? "chip on" : "chip"} onClick={() => pick(p.id)}>
-            {p.title}
-          </button>
-        ))}
+        {index.filter((p) => p.kind === "surface").map(chip)}
         <button className={customOpen || chart?.id === "custom" ? "chip on" : "chip"} onClick={() => setCustomOpen(!customOpen)}>
           {uk.panel.custom}…
         </button>

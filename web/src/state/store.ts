@@ -55,6 +55,24 @@ export interface LabState {
   /** Metric tool: size of the coordinate cell, as a fraction of the grid step. */
   cellFrac: number;
 
+  // --- tool state (stage 4) ---
+  /** Christoffel tool: direction of the shift, ∂₁ or ∂₂. */
+  christoffelDir: 0 | 1;
+  /** Transport tool: loop type, its size (in grid steps) and the initial vector (contravariant). */
+  loopKind: "circle" | "line";
+  loopR: number;
+  transportV0: V2;
+  /** Animation phase of the transported vector, 0..1 (null = show all). */
+  transportT: number | null;
+  /** Geodesic fan: central direction (orthonormal-frame angle), half-spread, length. */
+  fanAlpha: number;
+  fanSpread: number;
+  fanLength: number;
+  /** δ/ε tool: dimension of the tables. */
+  symN: 2 | 3;
+  /** Chart point under the cursor (curvature read-out). */
+  hoverQ: V2 | null;
+
   setPage(p: PageId): void;
   setIndex(i: PresetMeta[]): void;
   setChart(c: Chart): void;
@@ -71,10 +89,13 @@ export interface LabState {
   setAngleVec(i: 0 | 1, w: V2): void;
   toggleDual(): void;
   setCellFrac(f: number): void;
+  set(partial: Partial<LabState>): void;
 }
 
 /** Default tool objects for a chart, placed near the probe point. */
-export function toolDefaults(chart: Chart): Pick<LabState, "lengthPts" | "vec" | "angleVecs"> {
+export function toolDefaults(
+  chart: Chart,
+): Pick<LabState, "lengthPts" | "vec" | "angleVecs" | "transportV0" | "fanLength" | "loopKind" | "fanAlpha"> {
   const [a, b] = chart.display.axes;
   const P = chart.display.probe;
   const span: V2 = [a.range[1] - a.range[0], b.range[1] - b.range[0]];
@@ -87,8 +108,14 @@ export function toolDefaults(chart: Chart): Pick<LabState, "lengthPts" | "vec" |
     lengthPts: [[...P], clampToDomain(chart, B)],
     vec: chart.kind === "embedded" ? mulV(localBasis(chart, IDENTITY_FRAME, P, chart.defaults), [1.1, 0.45]) : [1.3 * u, 0.8 * u],
     angleVecs: [[1.5 * u, 0.4 * u], [0.5 * u, 1.3 * u]],
+    transportV0: chart.kind === "abstract" ? [0, 0.4 * u] : [0.9, 0],
+    fanLength: FAN_LENGTH[chart.id] ?? (chart.kind === "abstract" ? 0.6 * Math.max(span[0], span[1]) : 7),
+    loopKind: chart.display.axes[1].periodic ? "line" : "circle",
+    fanAlpha: 0,
   };
 }
+
+const FAN_LENGTH: Record<string, number> = { sphere: Math.PI, torus: 7, saddle: 3 };
 
 const DEFAULT_B: Record<string, V2> = {
   cartesian: [3, -2],
@@ -125,6 +152,16 @@ export const useLab = create<LabState>((set, get) => ({
   angleVecs: [[1.5, 0.4], [0.5, 1.3]],
   showDual: true,
   cellFrac: 1,
+  christoffelDir: 1,
+  loopKind: "circle",
+  loopR: 3,
+  transportV0: [0.9, 0],
+  transportT: null,
+  fanAlpha: 0,
+  fanSpread: 0.45,
+  fanLength: 7,
+  symN: 3,
+  hoverQ: null,
 
   setPage: (page) => set({ page }),
   setIndex: (index) => set({ index }),
@@ -177,6 +214,7 @@ export const useLab = create<LabState>((set, get) => ({
     }),
   toggleDual: () => set((s) => ({ showDual: !s.showDual })),
   setCellFrac: (cellFrac) => set({ cellFrac }),
+  set: (partial) => set(partial),
   resetFrame: () => {
     const s = get();
     const from = currentLines(s);

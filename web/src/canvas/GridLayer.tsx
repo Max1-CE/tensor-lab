@@ -8,6 +8,7 @@ import { norm, symEig, type M2, type V2 } from "../geometry/linalg";
 import { toScreen, type Viewport } from "../geometry/viewport";
 import { currentLines, MORPH_MS, useLab, type LabState } from "../state/store";
 import { COLORS, rgba } from "../ui/theme";
+import { curvatureGrid, divergingRgba, type CurvatureGrid } from "../tools/compute2";
 
 function tracePath(path: Path2D, line: Line, v: Viewport): void {
   const jump = Math.max(v.width, v.height);
@@ -52,6 +53,75 @@ function arrow(ctx: CanvasRenderingContext2D, from: V2, to: V2, color: string, w
   ctx.fill();
 }
 
+/** Scalar curvature R(x) as a diverging heat map under the grid. */
+function drawHeatmap(ctx: CanvasRenderingContext2D, s: LabState): void {
+  const chart = s.chart!;
+  const grid = curvatureGrid(chart, s.params, 96, 72);
+  if (grid.maxAbs < 1e-9) return; // flat: nothing to paint
+  const v = s.view;
+  if (chart.kind === "abstract") {
+    // axis-aligned map: one smoothed image, no seams between cells
+    const img = heatImage(grid);
+    const a = toScreen(v, toWorld(chart, s.frame, [grid.q0[0], grid.q0[1] + grid.ny * grid.dq[1]], s.params));
+    const b = toScreen(v, toWorld(chart, s.frame, [grid.q0[0] + grid.nx * grid.dq[0], grid.q0[1]], s.params));
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(img, a[0], a[1], b[0] - a[0], b[1] - a[1]);
+    return;
+  }
+  const corner = (i: number, j: number) =>
+    toScreen(v, toWorld(chart, s.frame, [grid.q0[0] + i * grid.dq[0], grid.q0[1] + j * grid.dq[1]], s.params));
+  // screen positions of the cell corners, computed once per frame
+  const pts: V2[][] = [];
+  for (let i = 0; i <= grid.nx; i++) {
+    const row: V2[] = [];
+    for (let j = 0; j <= grid.ny; j++) row.push(corner(i, j));
+    pts.push(row);
+  }
+  for (let i = 0; i < grid.nx; i++)
+    for (let j = 0; j < grid.ny; j++) {
+      const R = grid.R[i * grid.ny + j];
+      if (!Number.isFinite(R) || Math.abs(R) < 1e-3 * grid.maxAbs) continue;
+      ctx.fillStyle = divergingRgba(R / grid.maxAbs);
+      const a = pts[i][j];
+      const b = pts[i + 1][j];
+      const c = pts[i + 1][j + 1];
+      const d = pts[i][j + 1];
+      ctx.beginPath();
+      ctx.moveTo(a[0], a[1]);
+      ctx.lineTo(b[0], b[1]);
+      ctx.lineTo(c[0], c[1]);
+      ctx.lineTo(d[0], d[1]);
+      ctx.closePath();
+      ctx.fill();
+    }
+}
+
+let heatCache: { grid: CurvatureGrid; canvas: HTMLCanvasElement } | null = null;
+
+/** The curvature grid as an nx × ny image (row 0 = top = largest q²). */
+function heatImage(grid: CurvatureGrid): HTMLCanvasElement {
+  if (heatCache?.grid === grid) return heatCache.canvas;
+  const c = document.createElement("canvas");
+  c.width = grid.nx;
+  c.height = grid.ny;
+  const g = c.getContext("2d")!;
+  const data = g.createImageData(grid.nx, grid.ny);
+  for (let i = 0; i < grid.nx; i++)
+    for (let j = 0; j < grid.ny; j++) {
+      const R = grid.R[i * grid.ny + j];
+      const t = Number.isFinite(R) ? R / grid.maxAbs : 0;
+      const k = 4 * ((grid.ny - 1 - j) * grid.nx + i);
+      const [r, gg, b] = t < 0 ? [57, 135, 229] : [230, 103, 103];
+      data.data[k] = r;
+      data.data[k + 1] = gg;
+      data.data[k + 2] = b;
+      data.data[k + 3] = Math.round(255 * 0.62 * Math.min(1, Math.abs(t)));
+    }
+  g.putImageData(data, 0, 0);
+  heatCache = { grid, canvas: c };
+  return c;
+}
+
 const stepOf = (vals: number[]) => (vals.length > 1 ? vals[1] - vals[0] : 1);
 
 function draw(ctx: CanvasRenderingContext2D, s: LabState, now: number): void {
@@ -63,6 +133,8 @@ function draw(ctx: CanvasRenderingContext2D, s: LabState, now: number): void {
   const morphing = !!s.morph && now - s.morph.start < MORPH_MS;
   const fam = [COLORS.family0, COLORS.family1];
   const values = [axisValues(chart, 0), axisValues(chart, 1)];
+
+  if (s.tool === "curvature" && !morphing) drawHeatmap(ctx, s);
 
   ctx.lineCap = "round";
   ctx.lineJoin = "round";

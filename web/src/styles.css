@@ -184,3 +184,36 @@ button { cursor: pointer; }
 .big { font-size: 17px; }
 .warn { color: var(--e1); }
 .tool-panel .formula .katex-display { margin: 4px 0; }
+
+/* stage 4 */
+.chip-group { margin: 10px 0 6px; font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+.seg { display: inline-flex; border: 1px solid var(--panel-border); border-radius: 8px; overflow: hidden; margin: 4px 0; }
+.seg button { background: none; border: none; padding: 4px 12px; color: var(--text-dim); font-size: 13px; }
+.seg button + button { border-left: 1px solid var(--panel-border); }
+.seg button.on { background: rgba(61, 123, 255, 0.22); color: #fff; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 12px; font-size: 13px; }
+.spark { display: block; margin: 4px 0; }
+.spark .axis { stroke: rgba(139, 151, 191, 0.5); stroke-width: 1; }
+.spark .ref { stroke: #8b97bf; stroke-width: 1.4; stroke-dasharray: 5 4; }
+.spark .cross { stroke: rgba(255, 255, 255, 0.35); stroke-width: 1; }
+.spark .tick, .spark .tip { fill: var(--text-dim); font-size: 10px; }
+.spark .tip { fill: var(--text); }
+.heat-legend { margin: 8px 0; }
+.heat-legend .bar { height: 10px; border-radius: 3px; background: linear-gradient(90deg, #3987e5, #383835 50%, #e66767); }
+.heat-legend .ticks { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.sym-tables { display: flex; flex-wrap: wrap; gap: 10px 14px; margin: 8px 0; font-size: 13px; }
+table.sym { border-collapse: collapse; margin-top: 2px; font: 13px "KaTeX_Main", serif; }
+table.sym td { width: 24px; height: 22px; text-align: center; border: 1px solid rgba(90, 130, 255, 0.18); color: var(--text-dim); }
+table.sym td.one { color: #fff; background: rgba(61, 123, 255, 0.25); }
+table.sym td.pos { color: #fff; background: rgba(230, 103, 103, 0.35); }
+table.sym td.neg { color: #fff; background: rgba(57, 135, 229, 0.35); }
+.idx-pick select { background: #000; border: 1px solid var(--panel-border); border-radius: 5px; margin: 0 6px 0 2px; }
+.ok { color: #7dff8a; font-size: 13px; margin: 4px 0; }
+.inset {
+  position: absolute; right: 14px; bottom: 14px; z-index: 9; border-radius: var(--radius);
+  background: rgba(0, 0, 0, 0.6); border: 1px solid var(--panel-border); transition: right 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.inset.shifted { right: 408px; }
+.inset canvas { display: block; cursor: grab; touch-action: none; }
+.inset-label { position: absolute; left: 10px; bottom: 6px; font-size: 10px; color: var(--text-dim); pointer-events: none; }
+@media (max-width: 760px) { .inset { display: none; } }
