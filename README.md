@@ -5,7 +5,9 @@
 Інтерактивна лабораторія тензорного числення і ЗТВ за книгами Леонарда Саскінда
 «Теоретичний мінімум: СТВ / ЗТВ». Темний екран, плавні анімації, усе можна тягати мишкою.
 
-> **Статус:** етап 1 з 5 — символьне ядро і тести. Вебінтерфейс з'явиться на етапі 2.
+**Демо:** https://max1-ce.github.io/tensor-lab/
+
+> **Статус:** етап 2 з 5 — символьне ядро, полотно з сіткою, живий базис і метрика.
 
 ## Архітектура
 
@@ -30,6 +32,12 @@ core/
   export.py     JSON: LaTeX + JS function bodies
 scripts/precompute.py
 tests/test_core.py
+web/src/
+  symbolic/   worker.ts (Pyodide + core/*.py), client.ts (Comlink), compile.ts, presets.ts
+  geometry/   linalg, chart (frame A, pullback metric, inverse map), grid (+ morph), viewport
+  canvas/     GridLayer — coordinate lines, basis field, indicatrices
+  overlay/    Overlay — draggable O, P, e₁, e₂ (SVG)
+  ui/, theory/, i18n/uk.ts, state/store.ts (Zustand)
 ```
 
 ## Конвенції
@@ -39,13 +47,35 @@ tests/test_core.py
 R^ρ_{σμν} = ∂_μ Γ^ρ_{νσ} − ∂_ν Γ^ρ_{μσ} + Γ^ρ_{μλ}Γ^λ_{νσ} − Γ^ρ_{νλ}Γ^λ_{μσ},
 R_{σν} = R^ρ_{σρν}, сигнатура (−,+,+,+), G = c = 1.
 
+## Що вже вміє сторінка «Геометрія»
+
+- Сітки декартової, косої, полярної, еліптичної й параболічної систем; перемикання — плавний морфінг ліній.
+- Перетягування початку координат O, точки P і кінців базисних векторів e₁, e₂: сітка деформується
+  лінійно, а g_ij = e_i · e_j оновлюється наживо (змінені компоненти підсвічуються).
+- Поле локальних базисів ∂/∂xⁱ у вузлах сітки; лінії xⁱ = const через P.
+- Довільна метрика g_ij(x¹, x²): SymPy у браузері (Pyodide) рахує все символьно, полотно показує
+  індикатриси метрики (еліпси g_ij dxⁱdxʲ = ε²).
+- Висувна панель теорії з формулами KaTeX. Клавіші: T — теорія, R — скинути базис, F — поле базисів;
+  Shift — прив'язка до сітки, коліщатко — масштаб.
+
 ## Запуск
 
 ```bash
-python -m pip install -e ".[dev]"
+# symbolic kernel
+python -m pip install -r requirements-dev.txt
 python -m pytest              # symbolic kernel tests
 python scripts/precompute.py  # regenerate web/public/precomputed/
+
+# web app
+cd web
+npm install
+npm run dev                   # http://localhost:5173
+npm test                      # Vitest (numeric/geometry)
+npm run build                 # type-check + production build into web/dist
+npm run smoke:pyodide         # run core/*.py under Pyodide in Node
 ```
+
+CI запускає pytest, Vitest і збірку, а потім публікує `web/dist` на GitHub Pages.
 
 Що перевіряють тести:
 - площина в полярних, еліптичних, параболічних координатах: R = 0, хоча Γ ≠ 0;
@@ -60,7 +90,7 @@ python scripts/precompute.py  # regenerate web/public/precomputed/
 ## Дорожня карта
 
 1. ✅ Символьне ядро + тести
-2. Полотно: сітка, перетягування початку координат і базисних векторів, живе g_ij
+2. ✅ Полотно: сітка, перетягування початку координат і базисних векторів, живе g_ij
 3. Інструменти: метрика, довжина кривої, ко-/контраваріантні компоненти, кут
 4. Інструменти: Христоффель, паралельне перенесення, геодезичні, кривина, δ та ε
 5. Сторінка ЗТВ: Шварцшильд, діаграма вкладення Фламма, r = 2M / 3M / 6M
