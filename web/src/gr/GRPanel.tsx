@@ -7,6 +7,7 @@ import { loadPreset } from "../symbolic/presets";
 import type { Analysis } from "../symbolic/types";
 import { fmt } from "../ui/MetricPanel";
 import { RichText, Tex } from "../ui/Tex";
+import { OrbitPanel } from "./OrbitPanel";
 import { localQuantities, properDistance, SCHWARZSCHILD as ST, SUN_KM } from "./spacetime";
 import { M_RANGE, R_MAX, useGR, type GRElement } from "./store";
 
@@ -22,6 +23,7 @@ export function GRPanel() {
   const show = useGR((s) => s.show);
   const selected = useGR((s) => s.selected);
   const hover = useGR((s) => s.hover);
+  const module = useGR((s) => s.module);
   const [symbolic, setSymbolic] = useState<Analysis | null>(null);
   const gr = useGR.getState();
 
@@ -85,6 +87,9 @@ export function GRPanel() {
         </label>
       </section>
 
+      {module === "orbits" ? (
+        <OrbitPanel />
+      ) : (
       <section className={`panel${selected === "probe" ? " focus" : ""}`} onClick={() => selected !== "probe" && pick("probe")}>
         <h2>
           <label className="check inline" onClick={(e) => e.stopPropagation()}>
@@ -116,6 +121,7 @@ export function GRPanel() {
           <Tex tex={`\\text{від горизонту: } s = ${fmt(properDistance(2 * M, r, M), 2)},\\ \\ \\Delta r = ${fmt(r - 2 * M, 2)}`} />
         </div>
       </section>
+      )}
 
       {symbolic && (
         <section className="panel">

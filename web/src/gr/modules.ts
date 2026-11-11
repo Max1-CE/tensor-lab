@@ -14,7 +14,7 @@ export interface GRModule {
 
 export const GR_MODULES: GRModule[] = [
   { id: "embedding", title: "Вкладення", ready: true },
-  { id: "orbits", title: "Орбіти", ready: false },
+  { id: "orbits", title: "Орбіти", ready: true },
   { id: "light", title: "Світло", ready: false },
   { id: "kerr", title: "Керр", ready: false },
 ];

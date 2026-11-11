@@ -233,3 +233,6 @@ table.sym td.neg { color: #fff; background: rgba(57, 135, 229, 0.35); }
 .check.inline { display: inline-flex; margin-right: 6px; vertical-align: middle; }
 details summary { cursor: pointer; color: var(--text-dim); font-size: 13px; }
 .tool:disabled { cursor: default; }
+.linklike.inline-h { display: inline; width: auto; margin: 0; padding: 0; font: inherit; color: inherit; text-transform: inherit; letter-spacing: inherit; }
+.linklike.inline-h:hover { color: #fff; border-color: transparent; background: none; text-decoration: underline; }
+.veff { cursor: pointer; }

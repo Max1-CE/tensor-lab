@@ -5,6 +5,7 @@ import { uk } from "../i18n/uk";
 import { useLab, type ToolId } from "../state/store";
 import { TOOL_CARDS } from "../theory/cards";
 import { GR_MODULES } from "../gr/modules";
+import { R_MAX, useGR } from "../gr/store";
 
 const ICONS: Record<ToolId, ReactNode> = {
   frame: <path d="M5 19 L19 19 M5 19 L13 7 M17 17 L19 19 L17 21 M11 7.5 L13 7 L13.6 9" />,
@@ -30,6 +31,7 @@ export function Toolbar() {
   const page = useLab((s) => s.page);
   const tool = useLab((s) => s.tool);
   const theoryOpen = useLab((s) => s.theoryOpen);
+  const grModule = useGR((s) => s.module);
   const { setPage, setTool, toggleTheory } = useLab.getState();
 
   return (
@@ -53,9 +55,15 @@ export function Toolbar() {
           {GR_MODULES.map((m) => (
             <button
               key={m.id}
-              className={`tool${m.ready ? " on" : " later"}`}
+              className={`tool${grModule === m.id ? " on" : ""}${m.ready ? "" : " later"}`}
               title={m.ready ? m.title : `${m.title} — ${uk.gr.planned}`}
               disabled={!m.ready}
+              onClick={() => {
+                const gr = useGR.getState();
+                // orbits need room: keep the apoapsis inside the drawn region
+                const M = m.id === "orbits" ? Math.min(gr.M, R_MAX / gr.orbitRa) : gr.M;
+                gr.set({ module: m.id, selected: m.id === "orbits" ? "orbit" : "flamm", M, orbitPhi: 0 });
+              }}
             >
               <svg viewBox="0 0 24 24" aria-hidden>
                 {GR_ICONS[m.id]}
