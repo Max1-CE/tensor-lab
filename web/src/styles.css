@@ -176,3 +176,11 @@ button { cursor: pointer; }
   .theory { left: 10px; right: 10px; width: auto; top: 10px; bottom: 10px; }
 }
 .vecs { gap: 4px 14px; }
+
+/* tool panels (stage 3) */
+.panel h3 { margin: 12px 0 4px; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-dim); }
+.legend { display: flex; align-items: center; gap: 8px; margin: 5px 0; font-size: 13px; }
+.swatch { width: 22px; height: 0; border-top-width: 3px; flex: none; }
+.big { font-size: 17px; }
+.warn { color: var(--e1); }
+.tool-panel .formula .katex-display { margin: 4px 0; }

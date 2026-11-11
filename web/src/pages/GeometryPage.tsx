@@ -6,7 +6,7 @@ import { makeChart } from "../geometry/chart";
 import { Overlay } from "../overlay/Overlay";
 import { useLab } from "../state/store";
 import { loadIndex, loadPreset } from "../symbolic/presets";
-import { MetricPanel } from "../ui/MetricPanel";
+import { ToolPanel } from "../ui/ToolPanels";
 import { SidePanel } from "../ui/SidePanel";
 import { TheoryDrawer } from "../ui/TheoryDrawer";
 
@@ -44,7 +44,7 @@ export function GeometryPage() {
       </div>
       <div className="left-col">
         <SidePanel />
-        <MetricPanel />
+        <ToolPanel />
       </div>
       <TheoryDrawer />
     </main>

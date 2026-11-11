@@ -16,7 +16,7 @@ export const fmt = (x: number, digits = 2): string => {
   return v.toFixed(digits).replace("-", "−");
 };
 
-const isIdentity = (f: Frame) =>
+export const isIdentity = (f: Frame) =>
   f.O[0] === 0 && f.O[1] === 0 && f.A.every((a, i) => Math.abs(a - I2[i]) < 1e-12);
 
 /** Numeric ds² for a constant metric. */
@@ -33,7 +33,7 @@ function numericLineElement(chart: Chart, g: M2): string {
   return `ds^2 = ${body || "0"}`;
 }
 
-function useHot(values: number[]): boolean[] {
+export function useHot(values: number[]): boolean[] {
   const prev = useRef<number[] | null>(null);
   const stamps = useRef<number[]>(values.map(() => -Infinity));
   const [, rerender] = useReducer((x: number) => x + 1, 0);
@@ -54,7 +54,7 @@ function useHot(values: number[]): boolean[] {
   return hot;
 }
 
-function Matrix({ values, hot, labels }: { values: number[]; hot: boolean[]; labels: string[] }) {
+export function Matrix({ values, hot, labels }: { values: number[]; hot: boolean[]; labels: string[] }) {
   return (
     <div className="matrix" role="table">
       {values.map((v, i) => (

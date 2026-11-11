@@ -3,9 +3,9 @@
 import { create } from "zustand";
 import type { Params } from "../symbolic/compile";
 import type { PresetMeta } from "../symbolic/types";
-import { IDENTITY_FRAME, type Chart, type Frame } from "../geometry/chart";
+import { IDENTITY_FRAME, clampToDomain, localBasis, type Chart, type Frame } from "../geometry/chart";
 import { easeInOutCubic, morphGrid, sampleGrid, type Line } from "../geometry/grid";
-import type { V2 } from "../geometry/linalg";
+import { mulV, type V2 } from "../geometry/linalg";
 import { fitBox, type Viewport } from "../geometry/viewport";
 
 export type ToolId =
@@ -43,6 +43,18 @@ export interface LabState {
   showField: boolean;
   morph: Morph | null;
 
+  // --- tool state (stage 3) ---
+  /** Length tool: endpoints A, B in chart coordinates. */
+  lengthPts: [V2, V2];
+  /** Vector tool: the vector v at P, in world coordinates (a geometric object). */
+  vec: V2;
+  /** Angle tool: vectors u, w at P, in world coordinates. */
+  angleVecs: [V2, V2];
+  /** Vector tool: also show the dual basis and the covariant decomposition. */
+  showDual: boolean;
+  /** Metric tool: size of the coordinate cell, as a fraction of the grid step. */
+  cellFrac: number;
+
   setPage(p: PageId): void;
   setIndex(i: PresetMeta[]): void;
   setChart(c: Chart): void;
@@ -54,7 +66,37 @@ export interface LabState {
   toggleTheory(open?: boolean): void;
   toggleField(): void;
   resetFrame(): void;
+  setLengthPt(i: 0 | 1, q: V2): void;
+  setVec(w: V2): void;
+  setAngleVec(i: 0 | 1, w: V2): void;
+  toggleDual(): void;
+  setCellFrac(f: number): void;
 }
+
+/** Default tool objects for a chart, placed near the probe point. */
+export function toolDefaults(chart: Chart): Pick<LabState, "lengthPts" | "vec" | "angleVecs"> {
+  const [a, b] = chart.display.axes;
+  const P = chart.display.probe;
+  const span: V2 = [a.range[1] - a.range[0], b.range[1] - b.range[0]];
+  // world unit for abstract charts is a coordinate unit: scale vectors to the box
+  const u = chart.kind === "abstract" ? 0.22 * Math.min(span[0], span[1]) : 1;
+  const B: V2 = chart.kind === "abstract"
+    ? [P[0] + 0.3 * span[0], P[1] + 0.3 * span[1]]
+    : DEFAULT_B[chart.id] ?? [P[0] + 0.25 * span[0], P[1] + 0.25 * span[1]];
+  return {
+    lengthPts: [[...P], clampToDomain(chart, B)],
+    vec: chart.kind === "embedded" ? mulV(localBasis(chart, IDENTITY_FRAME, P, chart.defaults), [1.1, 0.45]) : [1.3 * u, 0.8 * u],
+    angleVecs: [[1.5 * u, 0.4 * u], [0.5 * u, 1.3 * u]],
+  };
+}
+
+const DEFAULT_B: Record<string, V2> = {
+  cartesian: [3, -2],
+  skew: [3, -2],
+  polar: [3, 2.6],
+  elliptic: [1.4, 2.8],
+  parabolic: [-1.2, 1.6],
+};
 
 /** Lines currently on screen (mid-morph if a morph is running). */
 export function currentLines(s: LabState, now = performance.now()): [Line[], Line[]] | null {
@@ -78,6 +120,11 @@ export const useLab = create<LabState>((set, get) => ({
   theoryOpen: true,
   showField: false,
   morph: null,
+  lengthPts: [[0, 0], [3, -2]],
+  vec: [1.3, 0.8],
+  angleVecs: [[1.5, 0.4], [0.5, 1.3]],
+  showDual: true,
+  cellFrac: 1,
 
   setPage: (page) => set({ page }),
   setIndex: (index) => set({ index }),
@@ -104,6 +151,7 @@ export const useLab = create<LabState>((set, get) => ({
       params: { ...chart.defaults },
       frame: IDENTITY_FRAME,
       probe: [...chart.display.probe],
+      ...toolDefaults(chart),
       morph: from ? { from, start: performance.now() } : null,
     });
   },
@@ -114,6 +162,21 @@ export const useLab = create<LabState>((set, get) => ({
   setTool: (tool) => set({ tool, theoryOpen: true }),
   toggleTheory: (open) => set((s) => ({ theoryOpen: open ?? !s.theoryOpen })),
   toggleField: () => set((s) => ({ showField: !s.showField })),
+  setLengthPt: (i, q) =>
+    set((s) => {
+      const pts: [V2, V2] = [s.lengthPts[0], s.lengthPts[1]];
+      pts[i] = q;
+      return { lengthPts: pts };
+    }),
+  setVec: (vec) => set({ vec }),
+  setAngleVec: (i, w) =>
+    set((s) => {
+      const v: [V2, V2] = [s.angleVecs[0], s.angleVecs[1]];
+      v[i] = w;
+      return { angleVecs: v };
+    }),
+  toggleDual: () => set((s) => ({ showDual: !s.showDual })),
+  setCellFrac: (cellFrac) => set({ cellFrac }),
   resetFrame: () => {
     const s = get();
     const from = currentLines(s);

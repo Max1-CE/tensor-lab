@@ -25,6 +25,12 @@ export function axisValues(chart: Chart, i: 0 | 1): number[] {
   return Array.from({ length: n }, (_, k) => lo + k * step);
 }
 
+/** Spacing between neighbouring coordinate lines of coordinate i. */
+export function axisStep(chart: Chart, i: 0 | 1): number {
+  const v = axisValues(chart, i);
+  return v.length > 1 ? v[1] - v[0] : 1;
+}
+
 /** World polyline of the coordinate line q^i = value. */
 export function coordinateLine(
   chart: Chart,
